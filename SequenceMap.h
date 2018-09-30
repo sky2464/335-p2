@@ -21,6 +21,13 @@ class SequenceMap {
 	SequenceMap & operator =(SequenceMap && )= default; //Move assignment operator
 	~SequenceMap() = default; // Destractur
 
+	SequenceMap(const string &a_rec_seq, const string &an_enz_acro){ // Constructor to access private member
+		enzyme_acronyms_.push_back(an_enz_acro); // Vector enzyme_acronyms_ get an_enz_acro data
+		recognition_sequence_ = a_rec_seq; // manipulate private data
+	}
+
+	bool operator<(const SequenceMap &rhs) const{this-> recognition_sequence_ < rhs.SequenceMap};
+
 
   private:
 	string recognition_sequence_ ;
