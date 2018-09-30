@@ -8,6 +8,7 @@
 #ifndef SEQUENCEMAP_H_
 #define SEQUENCEMAP_H_
 
+#include<iostream>
 #include <vector>
 using namespace std;
 
@@ -25,6 +26,7 @@ class SequenceMap {
 		enzyme_acronyms_.push_back(an_enz_acro); // Vector enzyme_acronyms_ get an_enz_acro data
 		recognition_sequence_ = a_rec_seq; // manipulate private data
 	}
+	friend std::ostream &operator <<(std::ostream &output, const SequenceMap &a_map){}
 
 	bool operator<(const SequenceMap &rhs) const{this-> recognition_sequence_ < rhs.SequenceMap};
 
