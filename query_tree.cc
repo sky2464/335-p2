@@ -5,7 +5,8 @@
 #include "BinarySearchTree.h"
 // You will have to add #include "SequenceMap.h"
 #include "SequenceMap.h"
-
+#include <fstream>
+#include <sstream>
 #include <iostream>
 #include <string>
 using namespace std;
@@ -18,9 +19,61 @@ namespace {
 template <typename TreeType>
 void QueryTree(const string &db_filename, TreeType &a_tree) {
   // Code for running Part2(a)
-  // You can use public functions of TreeType. For example:
-  a_tree.insert(10);
-  a_tree.printTree();
+  ifstream in_stream(db_filename);
+  //Tree<SequenceMap> a_tree;
+  string db_line = "";
+  if (!in_stream.is_open()) {
+    exit(EXIT_FAILURE);
+  }
+  // ELSE Read the file line -by - line:
+  //Skip the first 10 lines!
+  int topOfTheFile = 0;
+
+  while (topOfTheFile < 10) {
+    getline(in_stream, db_filename, db_line);
+    topOfTheFile++;
+  }
+  //data parser
+  while (getline(in_stream, db_line)) {
+    // Get the first part of the line:
+    // If program read a bad line ignore it.
+    if (db_line.length() < 1) { continue;}
+    stringstream currentEnz(db_line);
+    string an_enz_acro = "";
+    string a_reco_seq = "";
+    // GetEnzymeAcronym(db_line);
+    // an_enz_acro are before the '/'
+    getline(currentEnz, an_enz_acro, '/');
+
+    // while  (GetNextRegocnitionSequence(db_line, a_rego_seq) {
+
+    //Getting the next recognize sequences to insert in tree
+    while (getline(currentEnz, a_reco_seq, '/')){
+
+      if( a_reco_seq.length() > 0 ){ // Reach to the "/ or //"
+        SequenceMap new_seqMap( a_reco_seq, an_enz_acro ); // Create a new sequence map to insert in Tree
+        a_tree.insert(new_seqMap);
+      }
+      //SequenceMap new_sequence_map (a_reco_seq, an_enz_acro);
+    }
+    a_tree.insert(new_sequence_map);
+  }  // End second while.
+}
+// End first while.
+string input="";
+
+
+
+
+
+
+
+
+
+
+// You can use public functions of TreeType. For example:
+a_tree.insert(10);
+a_tree.printTree();
 }
 
 }  // namespace
