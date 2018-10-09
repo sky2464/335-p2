@@ -26,29 +26,29 @@ class SequenceMap {
 		enzyme_acronyms_.push_back(an_enz_acro); // Vector enzyme_acronyms_ get an_enz_acro data
 		recognition_sequence_ = a_rec_seq; // manipulate private data
 	}
-	friend ostream &operator <<(ostream &output, const SequenceMap &a_map) {}
+	//friend ostream &operator <<(ostream &output, const SequenceMap &a_map) {}
 
-	    bool operator<( const SequenceMap &rhs ) const{ return (this->recognition_sequence_ < rhs.recognition_sequence_); }
+	bool operator<( const SequenceMap &rhs ) const { return (this->recognition_sequence_ < rhs.recognition_sequence_); }
 
-    friend ostream &operator<<( std::ostream &out, const SequenceMap &a_map ) {
-      if( a_map.enzyme_acronyms_.empty() ){ abort(); }
-      else{
-    	    for( string it : a_map.enzyme_acronyms_ ){ // no const
-    		    out<< it << " ";
-    	    	}
-      }
-      return out;
-    }
-void Merge( const SequenceMap &other_sequence ){
-      if( recognition_sequence_ == other_sequence.recognition_sequence_ ){ // Merge() will only be called in case of duplicates
-			for( const auto& it : enzyme_acronyms_ ){
-				if( it == other_sequence.enzyme_acronyms_[0] ){ // Check if the acronym already exist in *this
+	friend ostream &operator<<(ostream &out, const SequenceMap &a_map ) {
+		if ( a_map.enzyme_acronyms_.empty() ) { abort(); }
+		else {
+			for ( string it : a_map.enzyme_acronyms_ ) { // no const
+				out << it << " ";
+			}
+		}
+		return out;
+	}
+	void Merge( const SequenceMap &other_sequence ) {
+		if ( recognition_sequence_ == other_sequence.recognition_sequence_ ) { // Merge() will only be called in case of duplicates
+			for ( const auto& it : enzyme_acronyms_ ) {
+				if ( it == other_sequence.enzyme_acronyms_[0] ) { // Check if the acronym already exist in *this
 					return; // no need to Merge
 				}
 			}// Else merge the other_sequence.enzyme_acronym_ with the object’s enzyme_acronym_
-      	enzyme_acronyms_.push_back( other_sequence.enzyme_acronyms_[0] );
-      }
-    }
+			enzyme_acronyms_.push_back( other_sequence.enzyme_acronyms_[0] );
+		}
+	}
 
 
 

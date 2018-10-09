@@ -13,73 +13,75 @@ using namespace std;
 
 namespace {
 
-// @db_filename: an input filename.
-// @a_tree: an input tree of the type TreeType. It is assumed to be
-//  empty.
-template <typename TreeType>
-void QueryTree(const string &db_filename, TreeType &a_tree) {
-  // Code for running Part2(a)
-  ifstream in_stream(db_filename);
-  //Tree<SequenceMap> a_tree;
-  string db_line = "";
-  if (!in_stream.is_open()) {
-    exit(EXIT_FAILURE);
-  }
-  // ELSE Read the file line -by - line:
-  //Skip the first 10 lines!
-  int topOfTheFile = 0;
-
-  while (topOfTheFile < 10) {
-    getline(in_stream, db_filename, db_line);
-    topOfTheFile++;
-  }
-  //data parser
-  while (getline(in_stream, db_line)) {
-    // Get the first part of the line:
-    // If program read a bad line ignore it.
-    if (db_line.length() < 1) { continue;}
-    stringstream currentEnz(db_line);
-    string an_enz_acro = "";
-    string a_reco_seq = "";
-    // GetEnzymeAcronym(db_line);
-    // an_enz_acro are before the '/'
-    getline(currentEnz, an_enz_acro, '/');
-
-    // while  (GetNextRegocnitionSequence(db_line, a_rego_seq) {
-
-    //Getting the next recognize sequences to insert in tree
-    while (getline(currentEnz, a_reco_seq, '/')){
-
-      if( a_reco_seq.length() > 0 ){ // Reach to the "/ or //"
-        SequenceMap new_seqMap( a_reco_seq, an_enz_acro ); // Create a new sequence map to insert in Tree
-        a_tree.insert(new_seqMap);
-      }
-      //SequenceMap new_sequence_map (a_reco_seq, an_enz_acro);
+  // @db_filename: an input filename.
+  // @a_tree: an input tree of the type TreeType. It is assumed to be
+  //  empty.
+  template <typename TreeType>
+  void QueryTree(const string &db_filename, TreeType &a_tree) {
+    // Code for running Part2(a)
+    ifstream in_stream(db_filename);
+    //Tree<SequenceMap> a_tree;
+    string db_line = "";
+    if (!in_stream.is_open()) {
+      exit(EXIT_FAILURE);
     }
-    a_tree.insert(new_sequence_map);
-  }  // End second while.
-}
-// End first while.
-string input="";
+    // ELSE Read the file line -by - line:
+    //Skip the first 10 lines!
+    int topOfTheFile = 0;
 
+    while (topOfTheFile < 10) {
+      getline(in_stream, db_line);
+      topOfTheFile++;
+    }
+    //data parser
+    while (getline(in_stream, db_line)) {
+      // Get the first part of the line:
+      // If program read a bad line ignore it.
+      if (db_line.length() < 1) { continue;}
+      stringstream currentEnz(db_line);
+      string an_enz_acro = "";
+      string a_reco_seq = "";
+      // GetEnzymeAcronym(db_line);
+      // an_enz_acro are before the '/'
+      getline(currentEnz, an_enz_acro, '/');
 
+      // while  (GetNextRegocnitionSequence(db_line, a_rego_seq) {
 
+      //Getting the next recognize sequences to insert in tree
+      while (getline(currentEnz, a_reco_seq, '/')) {
 
+        if ( a_reco_seq.length() > 0 ) { // Reach to the "/ or //"
+          //SequenceMap new_sequence_map (a_reco_seq, an_enz_acro);
+          SequenceMap new_seqMap( a_reco_seq, an_enz_acro ); // Create a new sequence map to insert in Tree
+          a_tree.insert(new_seqMap);
+        }
 
+      }
 
+    }  // End second while.
+  }
+  // End first while.
+  string input = "";
+  while ( input != "Quite" ) {
+    cout << "Quite to exit\nGet a recognition sequence to query: ";
+    cin >> input;
+    if ( input ==  "Quite" ) { break; }
 
+    SequenceMap query( input, "" ); // Query the sequence map
 
+    if ( (a_tree.contains(query)) ) {
 
-
-// You can use public functions of TreeType. For example:
-a_tree.insert(10);
-a_tree.printTree();
-}
+      cout << a_tree.getNode(query) << endl;
+    } // only prints one acronym, needs iterator
+    else { // print all the corresponding enzyme_acronyms from that recognition sequence.
+      cout << "Not Found! \n";
+      break;
+    }
+  }
 
 }  // namespace
 
-int
-main(int argc, char **argv) {
+int main(int argc, char **argv) {
   if (argc != 3) {
     cout << "Usage: " << argv[0] << " <databasefilename> <tree-type>" << endl;
     return 0;
