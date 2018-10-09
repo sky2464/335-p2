@@ -63,10 +63,10 @@ void QueryTree(const string &db_filename, TreeType &a_tree) {
 
     // End first while.
     string input = "";
-    while ( input != "Quite" ) {
-        cout << "Quite to exit\nGet a recognition sequence to query: ";
+    while ( input != "Q" ) {
+        cout << "\nGet a recognition sequence to query: ";
         cin >> input;
-        if ( input ==  "Quite" ) { break; }
+        if ( input ==  "Q" ) { break; }
 
         SequenceMap query( input, "" ); // Query the sequence map
 
