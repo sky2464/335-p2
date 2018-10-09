@@ -2,8 +2,8 @@
 Using and  Comparing Tree Implementations
 /***************************************************************
 Readme file
-Salem.Saboori00@myhunter.cuny.edu
-Navid Saboori
+Salem.Saboori00 /////@///// myhunter.cuny.edu
+Navid 
 10/8/2018
 Fall 2018, CSCI 335 - Prof.Stamos
 /
