@@ -22,6 +22,7 @@ class BinarySearchTree { // BinarySearchTree class Throws UnderflowException as 
         }
         ~BinarySearchTree( ) { makeEmpty( ); }
 
+
         void printTree( ostream & out = cout ) const { // Print the tree contents in sorted order.
             if( isEmpty( ) ) out << "Empty tree" << endl;
             else printTree( root, out );
