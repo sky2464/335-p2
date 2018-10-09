@@ -84,15 +84,15 @@ void TestTree(const string &db_filename, const string &seq_filename, TreeType &a
   // Parse the database into the tree like previous part
   while( getline( in_stream, db_line )){ // Get Next Line From DatabaseFile
     if( db_line.length() < 1 ){ continue; }
-    string acro, r_seq;
+    string an_enz_acro, a_reco_seq;
 
-    stringstream current(db_line);
-    getline( current, acro, '/' ); // first part of the string for acronym
+    stringstream currentEnz(db_line);
+    getline( currentEnz, an_enz_acro, '/' ); // first part of the string for an_enz_acronym
 
-    while( getline( current, r_seq, '/') ){
-      if( r_seq.length() > 0 ){
-          SequenceMap new_sm( r_seq, acro );
-          a_tree.insert(new_sm);
+    while( getline( currentEnz, a_reco_seq, '/') ){
+      if( a_reco_seq.length() > 0 ){
+          SequenceMap new_SeqMap( a_reco_seq, an_enz_acro );
+          a_tree.insert(new_SeqMap);
       }
     }
   }
@@ -145,11 +145,11 @@ main(int argc, char **argv) {
   cout << "Type of tree is " << param_tree << endl;
   if (param_tree == "BST") {
     // Note that you will replace BinarySearchTree<int> with BinarySearchTree<SequenceMap>
-    BinarySearchTree<int> a_tree;
+    BinarySearchTree<SequenceMap> a_tree;
     TestTree(db_filename, seq_filename, a_tree);
   } else if (param_tree == "AVL") {
     // Note that you will replace AvlTree<int> with AvlTree<SequenceMap>
-    AvlTree<int> a_tree;
+    AvlTree<SequenceMap> a_tree;
     TestTree(db_filename, seq_filename, a_tree);
   } else {
     cout << "Uknown tree type " << param_tree << " (User should provide BST, or AVL)" << endl;
